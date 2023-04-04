@@ -11,7 +11,7 @@ const UsersSection = (props) => {
   return (
     <section>
       <h2>Users List</h2>
-      {error && <h3>{JSON.stringify(error)}</h3>}
+      {error && <h3>ERROR!!!</h3>}
       {isFetching && <h3>Loading...</h3>}
       {users.map((user, i) => (
         <article key={i}>{JSON.stringify(user)}</article>

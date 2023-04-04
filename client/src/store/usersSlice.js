@@ -1,15 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import * as httpClient from "../api";
 
 export const getAllUsers = createAsyncThunk(
   "users/getAllUsers",
   async (params = {}, thunkAPI) => {
     try {
-      //const { dispatch } = thunkAPI;
-      const data = await fetch("https://randomuser.me/api/?results=3").then(
-        (res) => res.json()
-      );
-      return data.results;
-      //dispatch(loadUsers(data.results));
+      const {data:{data}} = await httpClient.getUsers(params);
+      return data;
     } catch (error) {
       const { rejectWithValue } = thunkAPI;
       return rejectWithValue(error);
@@ -37,6 +34,7 @@ const usersSlice = createSlice({
       state.isFetching = false;
       state.error = action.payload;
     });
+    //3 створення
   },
 });
 
