@@ -1,6 +1,7 @@
 import React from "react";
 import { Field, Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
+import { createUser } from "./../../store/usersSlice";
 const initialValues = {
   firstName: "",
   lastName: "",
@@ -10,10 +11,10 @@ const initialValues = {
   isMale: true,
 };
 const UserForm = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const onSubmit = (values, formikBag) => {
-    console.log(values);
-    dispatch()
+    //console.log(values);
+    dispatch(createUser(values));
     //formikBag.resetForm();
   };
   return (
