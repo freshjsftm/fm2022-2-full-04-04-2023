@@ -1,49 +1,21 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import * as httpClient from "../api";
+import { decarateAsyncThunk, pendingReducer, rejectedReducer } from "./helpers";
 
-export const getAllUsers = createAsyncThunk(
-  "users/getAllUsers",
-  async (params = {}, thunkAPI) => {
-    try {
-      const {
-        data: { data },
-      } = await httpClient.getUsers(params);
-      return data;
-    } catch (error) {
-      const { rejectWithValue } = thunkAPI;
-      return rejectWithValue(error);
-    }
-  }
-);
+export const getAllUsers = decarateAsyncThunk({
+  type: "users/getAllUsers",
+  thunk: httpClient.getUsers,
+});
 
-export const getAllUsersMore = createAsyncThunk(
-  "users/getAllUsersMore",
-  async (params = {}, thunkAPI) => {
-    try {
-      const {
-        data: { data },
-      } = await httpClient.getUsers(params);
-      return data;
-    } catch (error) {
-      const { rejectWithValue } = thunkAPI;
-      return rejectWithValue(error);
-    }
-  }
-);
+export const getAllUsersMore = decarateAsyncThunk({
+  type: "users/getAllUsersMore",
+  thunk: httpClient.getUsers,
+});
 
-export const createUser = createAsyncThunk(
-  "users/createUser",
-  async (values, { rejectWithValue }) => {
-    try {
-      const {
-        data: { data },
-      } = await httpClient.postUser(values);
-      return data;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
+export const createUser = decarateAsyncThunk({
+  type: "users/createUser",
+  thunk: httpClient.postUser,
+});
 
 const usersSlice = createSlice({
   name: "users",
@@ -51,52 +23,36 @@ const usersSlice = createSlice({
     users: [],
     error: null,
     isFetching: false,
-    
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllUsers.pending, (state, action) => {
-      state.isFetching = true;
-      state.error = null;
-    });
+    builder.addCase(getAllUsers.pending, pendingReducer);
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
+      const {payload:{data:{data}}} =action;
       state.error = null;
       state.isFetching = false;
-      state.users=action.payload;
+      state.users = data;
     });
-    builder.addCase(getAllUsers.rejected, (state, action) => {
-      state.isFetching = false;
-      state.error = action.payload;
-    });
+    builder.addCase(getAllUsers.rejected, rejectedReducer);
 
-    builder.addCase(getAllUsersMore.pending, (state, action) => {
-      state.isFetching = true;
-      state.error = null;
-    });
+    builder.addCase(getAllUsersMore.pending, pendingReducer);
     builder.addCase(getAllUsersMore.fulfilled, (state, action) => {
+      const {payload:{data:{data}}} =action;
       state.error = null;
       state.isFetching = false;
-      state.users.push(...action.payload);
+      state.users.push(...data);
     });
-    builder.addCase(getAllUsersMore.rejected, (state, action) => {
-      state.isFetching = false;
-      state.error = action.payload;
-    });
+    builder.addCase(getAllUsersMore.rejected, rejectedReducer);
 
     //3 створення
-    builder.addCase(createUser.pending, (state, action) => {
-      state.isFetching = true;
-      state.error = null;
-    });
+    builder.addCase(createUser.pending, pendingReducer);
     builder.addCase(createUser.fulfilled, (state, action) => {
+      const {payload:{data:{data}}} =action;
       state.error = null;
       state.isFetching = false;
-      state.users.push(action.payload);
+      state.users.push(data);
     });
-    builder.addCase(createUser.rejected, (state, action) => {
-      state.isFetching = false;
-      state.error = action.payload;
-    });
+    builder.addCase(createUser.rejected, rejectedReducer);
   },
 });
 
