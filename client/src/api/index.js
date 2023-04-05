@@ -1,5 +1,6 @@
 import axios from "axios";
 import qs from "query-string";
+import CONSTANTS from "../constants";
 
 const httpClient = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -7,7 +8,7 @@ const httpClient = axios.create({
 
 export const getUsers = (options={}) => {
   const defaultOptions = {
-    limit:5,
+    limit:CONSTANTS.MIN_LIMIT,
     offset:0
   }
   const readyOptions = {

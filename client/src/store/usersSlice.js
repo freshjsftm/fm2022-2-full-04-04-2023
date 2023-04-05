@@ -16,6 +16,21 @@ export const getAllUsers = createAsyncThunk(
   }
 );
 
+export const getAllUsersMore = createAsyncThunk(
+  "users/getAllUsersMore",
+  async (params = {}, thunkAPI) => {
+    try {
+      const {
+        data: { data },
+      } = await httpClient.getUsers(params);
+      return data;
+    } catch (error) {
+      const { rejectWithValue } = thunkAPI;
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const createUser = createAsyncThunk(
   "users/createUser",
   async (values, { rejectWithValue }) => {
@@ -36,6 +51,7 @@ const usersSlice = createSlice({
     users: [],
     error: null,
     isFetching: false,
+    
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -46,12 +62,27 @@ const usersSlice = createSlice({
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
       state.error = null;
       state.isFetching = false;
-      state.users = action.payload;
+      state.users=action.payload;
     });
     builder.addCase(getAllUsers.rejected, (state, action) => {
       state.isFetching = false;
       state.error = action.payload;
     });
+
+    builder.addCase(getAllUsersMore.pending, (state, action) => {
+      state.isFetching = true;
+      state.error = null;
+    });
+    builder.addCase(getAllUsersMore.fulfilled, (state, action) => {
+      state.error = null;
+      state.isFetching = false;
+      state.users.push(...action.payload);
+    });
+    builder.addCase(getAllUsersMore.rejected, (state, action) => {
+      state.isFetching = false;
+      state.error = action.payload;
+    });
+
     //3 створення
     builder.addCase(createUser.pending, (state, action) => {
       state.isFetching = true;
