@@ -3,10 +3,6 @@ const { Router } = require('express');
 const multer = require('multer');
 const GroupController = require('../controllers/group.controller');
 
-// const upload = multer({
-//   dest: path.resolve(__dirname, '../public/images'),
-// });
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.resolve(__dirname, '../public/images'))

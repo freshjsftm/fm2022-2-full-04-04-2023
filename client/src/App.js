@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import UserPage from "./pages/UserPage";
 import GroupPage from "./pages/GroupPage";
 import NavMenu from "./components/NavMenu";
+import UserProfile from "./components/UserProfile";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/users" element={<UserPage />} />
         <Route path="/groups" element={<GroupPage />} />
+        <Route path="/users/:idUser" element={<UserProfile />} />
         {/* <Route path="/tasks" element={<TaskPage />} /> */}
       </Routes>
     </BrowserRouter>

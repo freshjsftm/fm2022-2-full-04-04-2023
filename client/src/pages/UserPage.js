@@ -1,9 +1,10 @@
 import React from 'react';
+import UsersSection from '../components/UsersSection'
 
 const UserPage = () => {
   return (
     <div>
-      UserPage
+      <UsersSection />
     </div>
   );
 }

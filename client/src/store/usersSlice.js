@@ -23,6 +23,7 @@ const usersSlice = createSlice({
     users: [],
     error: null,
     isFetching: false,
+    currentUser: null,
   },
   reducers: {},
   extraReducers: (builder) => {

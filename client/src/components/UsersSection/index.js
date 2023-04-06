@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllUsers, getAllUsersMore } from "../../store/usersSlice";
 import CONSTANTS from "../../constants";
@@ -34,6 +35,7 @@ const UsersSection = (props) => {
             {user.firstName} {user.lastName}
           </h3>
           <p>{user.password}</p>
+          <Link to={`/users/${user.id}`}>profile</Link>
         </article>
       ))}
       <button
