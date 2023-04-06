@@ -10,7 +10,7 @@ const GroupForm = () => {
   const dispatch = useDispatch();
   const onSubmit = (values, formikBag) => {
     values.userId = 1; //1 -> state.authUser.id
-    console.log(values);
+    //console.log(values);
     dispatch(createGroup(values));
     //formikBag.resetForm();
   };
@@ -45,3 +45,5 @@ const GroupForm = () => {
 };
 
 export default GroupForm;
+
+
