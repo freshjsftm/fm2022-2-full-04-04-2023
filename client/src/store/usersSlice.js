@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as httpClient from "../api";
 import { decarateAsyncThunk, pendingReducer, rejectedReducer } from "./helpers";
-
+//one user
 export const getAllUsers = decarateAsyncThunk({
   type: "users/getAllUsers",
   thunk: httpClient.getUsers,

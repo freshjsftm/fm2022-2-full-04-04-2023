@@ -6,7 +6,7 @@ import CONSTANTS from "../constants";
 const httpClient = axios.create({
   baseURL: "http://localhost:3000/api",
 });
-
+//one user
 export const getUsers = (options = {}) => {
   const defaultOptions = {
     limit: CONSTANTS.MIN_LIMIT,
